@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.wx.wxmenu.mapper.WxMenuMapper">
+    
+    <resultMap type="WxMenu" id="WxMenuResult">
+        <result property="id"    column="id"    />
+        <result property="pId"    column="p_id"    />
+        <result property="type"    column="type"    />
+        <result property="name"    column="name"    />
+        <result property="url"    column="url"    />
+        <result property="menuKey"    column="menu_key"    />
+        <result property="responseType"    column="response_type"    />
+    </resultMap>
+	
+	<sql id="selectWxMenuVo">
+        select id, p_id, type, name, url, menu_key, response_type from wx_menu
+    </sql>
+	
+    <select id="selectWxMenuList" parameterType="WxMenu" resultMap="WxMenuResult">
+        <include refid="selectWxMenuVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="pId != null "> and p_id = #{pId}</if>
+             <if test="type != null  and type != '' "> and type = #{type}</if>
+             <if test="name != null  and name != '' "> and name = #{name}</if>
+             <if test="url != null  and url != '' "> and url = #{url}</if>
+             <if test="menuKey != null  and menuKey != '' "> and menu_key = #{menuKey}</if>
+             <if test="responseType != null "> and response_type = #{responseType}</if>
+         </where>
+    </select>
+    
+    <select id="selectWxMenuById" parameterType="Integer" resultMap="WxMenuResult">
+        <include refid="selectWxMenuVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertWxMenu" parameterType="WxMenu" useGeneratedKeys="true" keyProperty="id">
+        insert into wx_menu
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="pId != null  ">p_id,</if>
+			<if test="type != null  and type != ''  ">type,</if>
+			<if test="name != null  and name != ''  ">name,</if>
+			<if test="url != null  and url != ''  ">url,</if>
+			<if test="menuKey != null  and menuKey != ''  ">menu_key,</if>
+			<if test="responseType != null  ">response_type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="pId != null  ">#{pId},</if>
+			<if test="type != null  and type != ''  ">#{type},</if>
+			<if test="name != null  and name != ''  ">#{name},</if>
+			<if test="url != null  and url != ''  ">#{url},</if>
+			<if test="menuKey != null  and menuKey != ''  ">#{menuKey},</if>
+			<if test="responseType != null  ">#{responseType},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateWxMenu" parameterType="WxMenu">
+        update wx_menu
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="pId != null  ">p_id = #{pId},</if>
+            <if test="type != null  and type != ''  ">type = #{type},</if>
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="url != null  and url != ''  ">url = #{url},</if>
+            <if test="menuKey != null  and menuKey != ''  ">menu_key = #{menuKey},</if>
+            <if test="responseType != null  ">response_type = #{responseType},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteWxMenuById" parameterType="Integer">
+        delete from wx_menu where id = #{id}
+    </delete>
+	
+    <delete id="deleteWxMenuByIds" parameterType="String">
+        delete from wx_menu where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

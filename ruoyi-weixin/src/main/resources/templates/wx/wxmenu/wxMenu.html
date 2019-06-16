@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('微信菜单列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>
+								父菜单ID：<input type="text" name="pId"/>
+							</li>
+
+							<li>
+								菜单类型：<input type="text" name="type"/>
+							</li>
+
+							<li>
+								子菜单标题：<input type="text" name="name"/>
+							</li>
+
+							<li>
+								网页链接,用户点击菜单可打开链接：<input type="text" name="url"/>
+							</li>
+
+							<li>
+								菜单key值,用于消息推送接口：<input type="text" name="menuKey"/>
+							</li>
+
+							<li>
+								返回的类型：<input type="text" name="responseType"/>
+							</li>
+
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:wxMenu:add">
+					<i class="fa fa-plus"></i> 添加
+				</a>
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:wxMenu:edit">
+					<i class="fa fa-edit"></i> 修改
+				</a>
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:wxMenu:remove">
+					<i class="fa fa-remove"></i> 删除
+				</a>
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:wxMenu:export">
+						<i class="fa fa-download"></i> 导出
+				 </a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('com.ruoyi.wx:wxmenu:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('com.ruoyi.wx:wxmenu:remove')}]];
+        var prefix = ctx + "wx/wxmenu";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+                modalName: "微信菜单",
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'id', 
+					title : '菜单ID',
+					visible: false
+				},
+				{
+					field : 'pId', 
+					title : '父菜单ID',
+					sortable: true
+				},
+				{
+					field : 'type', 
+					title : '菜单类型',
+					sortable: true
+				},
+				{
+					field : 'name', 
+					title : '子菜单标题',
+					sortable: true
+				},
+				{
+					field : 'url', 
+					title : '网页链接,用户点击菜单可打开链接',
+					sortable: true
+				},
+				{
+					field : 'menuKey', 
+					title : '菜单key值,用于消息推送接口',
+					sortable: true
+				},
+				{
+					field : 'responseType', 
+					title : '返回的类型',
+					sortable: true
+				},
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

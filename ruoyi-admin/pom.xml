@@ -72,6 +72,12 @@
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-generator</artifactId>
         </dependency>
+
+        <!-- 微信开发-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-weixin</artifactId>
+        </dependency>
         
     </dependencies>
 

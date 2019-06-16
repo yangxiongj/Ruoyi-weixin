@@ -202,7 +202,13 @@
 	            <artifactId>ruoyi-common</artifactId>
 	            <version>${ruoyi.version}</version>
 	        </dependency>
-	        
+
+			<!-- 微信开发-->
+			<dependency>
+				<groupId>com.ruoyi</groupId>
+				<artifactId>ruoyi-weixin</artifactId>
+				<version>3.4</version>
+			</dependency>
         </dependencies>
     </dependencyManagement>
 
