@@ -74,11 +74,18 @@
         </dependency>
 
         <!-- 微信开发-->
+<!--
         <dependency>
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-weixin</artifactId>
         </dependency>
-        
+-->
+
+        <!-- 爬虫开发-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-spider</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

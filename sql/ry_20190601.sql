@@ -618,7 +618,22 @@ create table sys_notice (
   remark 			varchar(255) 	default null 			   comment '备注',
   primary key (notice_id)
 ) engine=innodb auto_increment=10 comment = '通知公告表';
-
+-- ----------------------------
+-- 19、文件
+-- ----------------------------
+DROP TABLE IF EXISTS spi_file;
+CREATE TABLE spi_file(
+	id int(32) auto_increment NOT NULL,
+	menu VARCHAR(15) NOT NULL COMMENT '目录',
+	user_id VARCHAR(25) COMMENT '分享用户',
+	file_type VARCHAR(25) COMMENT '文件格式',
+	file_size VARCHAR(25) COMMENT '文件大小',
+	look_count VARCHAR(8) COMMENT '浏览次数',
+	down_counr VARCHAR(8) COMMENT '下载次数',
+	create_data datetime COMMENT '分享时间',
+	url VARCHAR(1080)  NOT NULL COMMENT '地址',
+	PRIMARY KEY(id)
+)engine=INNODB auto_increment=10 COMMENT ='百度云盘';
 -- ----------------------------
 -- 初始化-公告信息表数据
 -- ----------------------------

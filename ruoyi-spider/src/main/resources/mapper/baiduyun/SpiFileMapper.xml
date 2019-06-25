@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.spider.baiduyun.mapper.SpiFileMapper">
+    
+    <resultMap type="SpiFile" id="SpiFileResult">
+        <result property="id"    column="id"    />
+        <result property="menu"    column="menu"    />
+        <result property="userName"    column="user_name"    />
+        <result property="fileType"    column="file_type"    />
+        <result property="fileSize"    column="file_size"    />
+        <result property="lookCount"    column="look_count"    />
+        <result property="downCounr"    column="down_counr"    />
+        <result property="createData"    column="create_data"    />
+        <result property="url"    column="url"    />
+    </resultMap>
+	
+	<sql id="selectSpiFileVo">
+        select id, menu, user_name, file_type, file_size, look_count, down_counr, create_data, url from spi_file_tow
+    </sql>
+	
+    <select id="selectSpiFileList" parameterType="SpiFile" resultMap="SpiFileResult">
+        <include refid="selectSpiFileVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="menu != null  and menu != '' "> and menu = #{menu}</if>
+             <if test="userName != null  and userName != '' "> and user_name = #{userName}</if>
+             <if test="fileType != null  and fileType != '' "> and file_type = #{fileType}</if>
+             <if test="fileSize != null  and fileSize != '' "> and file_size = #{fileSize}</if>
+             <if test="lookCount != null  and lookCount != '' "> and look_count = #{lookCount}</if>
+             <if test="downCounr != null  and downCounr != '' "> and down_counr = #{downCounr}</if>
+             <if test="createData != null "> and create_data = #{createData}</if>
+             <if test="url != null  and url != '' "> and url = #{url}</if>
+         </where>
+    </select>
+    
+    <select id="selectSpiFileById" parameterType="Integer" resultMap="SpiFileResult">
+        <include refid="selectSpiFileVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSpiFile" parameterType="SpiFile" useGeneratedKeys="true" keyProperty="id">
+        insert into spi_file_tow
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null  and menu != ''  ">id,</if>
+			<if test="menu != null  and menu != ''  ">menu,</if>
+            <if test="remark != null  and remark != ''  ">remark,</if>
+			<if test="userName != null  and userName != ''  ">user_name,</if>
+			<if test="fileType != null  and fileType != ''  ">file_type,</if>
+			<if test="fileSize != null  and fileSize != ''  ">file_size,</if>
+			<if test="lookCount != null  and lookCount != ''  ">look_count,</if>
+			<if test="downCounr != null  and downCounr != ''  ">down_counr,</if>
+			<if test="createData != null  ">create_data,</if>
+			<if test="url != null  and url != ''  ">url,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null  and menu != ''  ">#{id},</if>
+			<if test="menu != null  and menu != ''  ">#{menu},</if>
+            <if test="remark != null  and remark != ''  ">#{remark},</if>
+			<if test="userName != null  and userName != ''  ">#{userName},</if>
+			<if test="fileType != null  and fileType != ''  ">#{fileType},</if>
+			<if test="fileSize != null  and fileSize != ''  ">#{fileSize},</if>
+			<if test="lookCount != null  and lookCount != ''  ">#{lookCount},</if>
+			<if test="downCounr != null  and downCounr != ''  ">#{downCounr},</if>
+			<if test="createData != null  ">#{createData},</if>
+			<if test="url != null  and url != ''  ">#{url},</if>
+         </trim>
+    </insert>
+    <insert id="insertSpiFileList" parameterType="SpiFile" useGeneratedKeys="true" keyProperty="id">
+        insert into spi_file_tow
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,
+            menu,
+            remark,
+            user_name,
+            file_type,
+            file_size,
+            look_count,
+            down_counr,
+            create_data,
+            url,
+        </trim>
+        VALUES
+        <!--<trim prefix="values (" suffix=")," suffixOverrides=";">-->
+        <foreach item="item" collection="spiFiles"  separator=",">
+            (#{item.id},
+            #{item.menu},
+            #{item.remark},
+            #{item.userName},
+            #{item.fileType},
+            #{item.fileSize},
+            #{item.lookCount},
+            #{item.downCounr},
+            #{item.createData},
+            #{item.url})
+        </foreach>
+        <!-- </trim>-->
+    </insert>
+
+    <update id="updateSpiFile" parameterType="SpiFile">
+        update spi_file_tow
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="menu != null  and menu != ''  ">menu = #{menu},</if>
+            <if test="userName != null  and userName != ''  ">user_name = #{userName},</if>
+            <if test="fileType != null  and fileType != ''  ">file_type = #{fileType},</if>
+            <if test="fileSize != null  and fileSize != ''  ">file_size = #{fileSize},</if>
+            <if test="lookCount != null  and lookCount != ''  ">look_count = #{lookCount},</if>
+            <if test="downCounr != null  and downCounr != ''  ">down_counr = #{downCounr},</if>
+            <if test="createData != null  ">create_data = #{createData},</if>
+            <if test="url != null  and url != ''  ">url = #{url},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteSpiFileById" parameterType="Integer">
+        delete from spi_file_tow where id = #{id}
+    </delete>
+	
+    <delete id="deleteSpiFileByIds" parameterType="String">
+        delete from spi_file_tow where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

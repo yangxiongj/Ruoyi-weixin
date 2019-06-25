@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.wx.wxmenu.mapper.WxMenuMapper">
     
-    <resultMap type="WxMenu" id="WxMenuResult">
+    <resultMap type="com.ruoyi.wx.wxmenu.domain.WxMenu" id="WxMenuResult">
         <result property="id"    column="id"    />
         <result property="pId"    column="p_id"    />
         <result property="type"    column="type"    />
@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select id, p_id, type, name, url, menu_key, response_type from wx_menu
     </sql>
 	
-    <select id="selectWxMenuList" parameterType="WxMenu" resultMap="WxMenuResult">
+    <select id="selectWxMenuList" parameterType="com.ruoyi.wx.wxmenu.domain.WxMenu" resultMap="WxMenuResult">
         <include refid="selectWxMenuVo"/>
         <where>  
             <if test="id != null "> and id = #{id}</if>
@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </select>
         
-    <insert id="insertWxMenu" parameterType="WxMenu" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertWxMenu" parameterType="com.ruoyi.wx.wxmenu.domain.WxMenu" useGeneratedKeys="true" keyProperty="id">
         insert into wx_menu
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="pId != null  ">p_id,</if>
@@ -56,7 +56,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
     </insert>
 	 
-    <update id="updateWxMenu" parameterType="WxMenu">
+    <update id="updateWxMenu" parameterType="com.ruoyi.wx.wxmenu.domain.WxMenu">
         update wx_menu
         <trim prefix="SET" suffixOverrides=",">
             <if test="pId != null  ">p_id = #{pId},</if>

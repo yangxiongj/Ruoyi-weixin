@@ -209,6 +209,12 @@
 				<artifactId>ruoyi-weixin</artifactId>
 				<version>3.4</version>
 			</dependency>
+			<!-- 爬虫-->
+			<dependency>
+				<groupId>com.ruoyi</groupId>
+				<artifactId>ruoyi-spider</artifactId>
+				<version>3.4</version>
+			</dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -220,6 +226,7 @@
 		<module>ruoyi-generator</module>
         <module>ruoyi-common</module>
 		<module>ruoyi-weixin</module>
+		<module>ruoyi-spider</module>
     </modules>
     <packaging>pom</packaging>
 
