@@ -18,7 +18,7 @@ public class SpiderServiceImpl implements SpiderService {
     @Override
     public List<SpiFile> getFiles(int page) {
         List<SpiFile> files = new ArrayList<>();
-        for (Long i=1067241l;i<10000000000l;i+=1600){
+        for (Long i=3470440l;i<10000000000l;i+=1600){
             String url = "http://m.sobaidupan.com/file-%d.html";
             DemoAutoNewsCrawler crawler = new DemoAutoNewsCrawler(url,false);
             //断点重爬

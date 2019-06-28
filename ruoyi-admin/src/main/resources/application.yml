@@ -128,3 +128,16 @@ xss:
   excludes: /system/notice/*
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
+
+ipaget:
+  baseurl:
+      -- http://www.kuaidaili.com/free/inha/
+      -- http://www.kuaidaili.com/free/intr/
+      -- http://www.kuaidaili.com/free/outtr/
+      -- http://www.xicidaili.com/nn/
+      -- http://www.xicidaili.com/nt/
+      -- http://www.xicidaili.com/wt/
+  totalpage: 50
+  bloomfilter:
+    expireDays: 30
+  wantednumber: 2

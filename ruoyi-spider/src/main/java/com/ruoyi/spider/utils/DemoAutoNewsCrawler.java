@@ -129,7 +129,7 @@ public class DemoAutoNewsCrawler extends BreadthCrawler {
                         if(data.length()<12){
                             data = data+" 0:00:00";
                         }
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/M/dd H:mm:ss");
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/M/d H:mm:ss");
                         LocalDateTime dateTime = LocalDateTime.parse(data,formatter);
                         file.setCreateData(dateTime);
                         break;
