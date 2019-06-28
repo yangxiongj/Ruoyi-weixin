@@ -69,7 +69,7 @@ public class DemoAutoNewsCrawler extends BreadthCrawler {
     @Override
     public void visit(Page page, CrawlDatums crawlDatums) {
         Document doc = null;
-
+        crawlDatums.addAndReturn("");
             try {
                 doc =page.doc();
             } catch (Exception e) {

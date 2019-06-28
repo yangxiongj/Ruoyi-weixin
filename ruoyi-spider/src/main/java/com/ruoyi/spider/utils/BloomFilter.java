@@ -19,7 +19,8 @@ public class BloomFilter<E> {
     //默认30天失效，大型爬虫请手动设置
     @Value("${ipaget.bloomfilter.expireDays:300}")
     public static long expireDays;
-
+    //
+    public RedisConsts redisConsts =  new RedisConsts("redisBloom");
     // total length of the Bloom filter
     private int sizeOfBloomFilter;
     // expected (maximum) number of elements to be added
@@ -84,6 +85,9 @@ public class BloomFilter<E> {
         add(element.toString().getBytes(charset),redisConsts);
     }
 
+    public void add(E element) {
+        add(element.toString().getBytes(charset),redisConsts);
+    }
     /**
      * Adds an array of bytes to the Bloom filter.
      *
@@ -100,13 +104,24 @@ public class BloomFilter<E> {
             redisTemplate.opsForValue().setBit(redisConsts.getBoolmFilter(), Math.abs(hash % sizeOfBloomFilter), true);
         }
     }
+    public void add(byte[] bytes) {
+        if (redisTemplate.opsForValue().get(redisConsts.getBoolmFilter()) == null) {
+            redisTemplate.opsForValue().setBit(redisConsts.getBoolmFilter(), 0, false);
+            redisTemplate.expire(redisConsts.getBoolmFilter(), expireDays, TimeUnit.DAYS);
+        }
+
+        int[] hashes = createHashes(bytes, numberOfHashFunctions);
+        for (int hash : hashes) {
+            redisTemplate.opsForValue().setBit(redisConsts.getBoolmFilter(), Math.abs(hash % sizeOfBloomFilter), true);
+        }
+    }
 
     /**
      * Adds all elements from a Collection to the Bloom filter.
      *
      * @param c Collection of elements.
      */
-    public void addAll(Collection<? extends E> c,RedisConsts redisConsts) {
+    public void addAll(Collection<? extends E> c) {
         for (E element : c) {
             add(element,redisConsts);
         }
